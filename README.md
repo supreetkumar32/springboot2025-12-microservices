@@ -106,6 +106,6 @@ if we hit localhost:9010/inventory/products/fetchOrders
 it will return Hello from Orders Service
 
 some code changes in application.yml
-if we hit localhost:9010/api/v1/inventory/products/fetchOrders
+if we hit localhost:9010/api/v1/inventory/products/fetchOrders  ::api/v1 daalna padega as it is not there in order-service but it is there in api-gateway application.yml
 it will return Hello from Orders Service
 

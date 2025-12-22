@@ -33,8 +33,10 @@ public class ProductController {
     }
 
     @GetMapping("/fetchOrders")
-    public String fetchFromOrdersService() {
+    public String fetchFromOrdersService(HttpServletRequest httpServletRequest) {
         System.out.println("inside the orderservice inventory controller");
+
+       // log.info(httpServletRequest.getHeader("x-custom-header"));//it will give Supreet
         ServiceInstance orderService= discoveryClient.getInstances("order-service").getFirst();//get order-service from the application.name from application.properties
 
         return restClient.get()
