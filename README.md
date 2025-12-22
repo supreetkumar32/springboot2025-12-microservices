@@ -64,3 +64,48 @@ Now, we can see in this whether we can fetchOrders from the inventory-service.
 http://localhost:9010/api/v1/products/fetchOrders GET 
 it will return Hello from Orders Service
 
+SPRING CLOUD API GATEWAY
+Spring Cloud API Gateway is a powerful, flexible solution for routing and 
+proxying requests to downstream services in a microservices architecture. It
+handles several important tasks like routing, filtering, authentication, and load balancing.
+
+Spring Cloud Gateway consists of 3 main building blocks:
+1. Route
+2. Predicate
+3. Filters
+
+Route: Think of this as the destination that we want a particular request to
+route to. It comprises of destination URI, a condition that has to satisfy — Or in
+terms of technical terms, Predicates, and one or more filters.
+
+Predicate: This is literally a condition to match. i.e. kind of “if”
+condition..if requests has something — e.g. path=blah or request header contains
+foo-bar etc.
+Predicates with path: - Path=/api/v1/orders/**
+Predicates with Method: - Method=GET
+Predicates with Header: - Header=User-Agent, Mozilla/*
+
+3. Filter: These are instances of Spring Framework WebFilter. This is where you can
+   apply your magic of modifying request or response. There are quite a lot of out of
+   box WebFilter that framework provides.
+   filters:
+- AddRequestHeader=X-Request-Id, 12345
+- AddResponseHeader=X-Response-id, abcd
+- RedirectTo=302, https://youtube.com
+- StripPrefix=1
+- RemoveRequestHeader=Cookie
+
+Now start the servers(run the codes):
+discovery-service
+order-service
+inventory-service
+api-gateway
+
+http://localhost:8761/ to see all
+if we hit localhost:9010/inventory/products/fetchOrders
+it will return Hello from Orders Service
+
+some code changes in application.yml
+if we hit localhost:9010/api/v1/inventory/products/fetchOrders
+it will return Hello from Orders Service
+
