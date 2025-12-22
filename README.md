@@ -47,3 +47,6 @@ in application.properties of inventory-service:
 eureka.client.service-url.defaultZone=http://localhost:8761/eureka
 
 in all the services, we have to do the same process.
+
+now run the discovery-server and hit the url
+http://localhost:8761/
