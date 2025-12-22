@@ -22,6 +22,12 @@ public class OrdersController {
         this.orderService = orderService;
     }
 
+    @GetMapping("/helloOrders")
+    public String helloOrders() {
+        System.out.println("inside the orders controller");
+        return "Hello from Orders Service";
+    }
+
     @GetMapping
     public ResponseEntity<List<OrderRequestDto>> getAllOrders(HttpServletRequest httpServletRequest) {
        // log.info("Fetching all orders via controller");

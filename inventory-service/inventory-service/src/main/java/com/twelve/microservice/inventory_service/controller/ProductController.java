@@ -2,10 +2,15 @@ package com.twelve.microservice.inventory_service.controller;
 
 import com.twelve.microservice.inventory_service.dto.ProductDto;
 import com.twelve.microservice.inventory_service.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
@@ -16,9 +21,26 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final DiscoveryClient discoveryClient;
+    private final RestClient restClient;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             DiscoveryClient discoveryClient,
+                             RestClient restClient) {
         this.productService = productService;
+        this.discoveryClient = discoveryClient;
+        this.restClient = restClient;
+    }
+
+    @GetMapping("/fetchOrders")
+    public String fetchFromOrdersService() {
+        System.out.println("inside the orderservice inventory controller");
+        ServiceInstance orderService= discoveryClient.getInstances("order-service").getFirst();//get order-service from the application.name from application.properties
+
+        return restClient.get()
+                .uri(orderService.getUri()+"/api/v1/orders/helloOrders")
+                .retrieve()
+                .body(String.class);
     }
 
     @GetMapping

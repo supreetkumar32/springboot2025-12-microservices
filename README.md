@@ -50,3 +50,17 @@ in all the services, we have to do the same process.
 
 now run the discovery-server and hit the url
 http://localhost:8761/
+
+Till now, in discovery service...both order service and inventory service is running
+
+WORKING OF EUREKA
+• Service Registration: A service registers itself with the Eureka Server upon startup.
+• Heartbeat: The service sends heartbeats periodically to renew its lease with the Eureka Server.
+• Service Discovery: Other services can query Eureka to discover the location (IP and port) of the registered service.
+• Health Check: Eureka performs health checks to ensure that registered services are still healthy.
+• Eviction: If a service stops sending heartbeats and its lease expires, the Eureka Server evicts it from the registry.
+
+Now, we can see in this whether we can fetchOrders from the inventory-service.
+http://localhost:9010/api/v1/products/fetchOrders GET 
+it will return Hello from Orders Service
+
