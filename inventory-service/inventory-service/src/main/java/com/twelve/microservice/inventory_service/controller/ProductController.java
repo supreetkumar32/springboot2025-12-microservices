@@ -11,11 +11,15 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllInventory() {

@@ -13,14 +13,19 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
+    public ProductService(ProductRepository productRepository, ModelMapper modelMapper) {
+        this.productRepository = productRepository;
+        this.modelMapper = modelMapper;
+    }
+
     public List<ProductDto> getAllInventory() {
-        log.info("Fetching all inventory items");
+ //       log.info("Fetching all inventory items");
         List<Product> inventories = productRepository.findAll();
         return inventories.stream()
                 .map(product -> modelMapper.map(product, ProductDto.class))
@@ -28,7 +33,7 @@ public class ProductService {
     }
 
     public ProductDto getProductById(Long id) {
-        log.info("Fetching Product with ID: {}", id);
+//        log.info("Fetching Product with ID: {}", id);
         Optional<Product> inventory = productRepository.findById(id);
         return inventory.map(item -> modelMapper.map(item, ProductDto.class))
                 .orElseThrow(() -> new RuntimeException("Inventory not found"));

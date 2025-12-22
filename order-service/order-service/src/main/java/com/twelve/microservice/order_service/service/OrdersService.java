@@ -11,21 +11,26 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Slf4j
 public class OrdersService {
 
     private final OrdersRepository orderRepository;
     private final ModelMapper modelMapper;
 
+    public OrdersService(OrdersRepository orderRepository, ModelMapper modelMapper) {
+        this.orderRepository = orderRepository;
+        this.modelMapper = modelMapper;
+    }
+
     public List<OrderRequestDto> getAllOrders() {
-        log.info("Fetching all orders");
+        //log.info("Fetching all orders");
         List<Orders> orders = orderRepository.findAll();
         return orders.stream().map(order -> modelMapper.map(order, OrderRequestDto.class)).toList();
     }
 
     public OrderRequestDto getOrderById(Long id) {
-        log.info("Fetching order with ID: {}", id);
+       // log.info("Fetching order with ID: {}", id);
         Orders order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         return modelMapper.map(order, OrderRequestDto.class);
     }
