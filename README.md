@@ -134,3 +134,19 @@ POST http://localhost:8080/api/v1/orders/core/create-order
       }
    ]
 }
+
+it will show changes in products table in id 14 and 15
+
+Resilience4j
+Resilience4j is a lightweight, standalone library designed for implementing resilience patterns in Java applications, particularly those using
+microservices architecture. It provides mechanisms to handle failures gracefully and ensures that services remain responsive under failure
+conditions. It’s Key features are:
+• Retry
+• Rate Limiter
+• Circuit Breaker
+• Integration with Spring Boot
+
+Retry
+Resilience4J can help write logic for retry when a service call fails. This
+retries failed operations a certain number of times before giving up. 
+
