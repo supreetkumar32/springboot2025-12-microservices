@@ -150,3 +150,8 @@ Retry
 Resilience4J can help write logic for retry when a service call fails. This
 retries failed operations a certain number of times before giving up. 
 
+RateLimiter
+Controls the rate of requests to a service by limiting the number of calls allowed during a specific time period
+
+we can check the rate limiter and retry in the post function above.
+

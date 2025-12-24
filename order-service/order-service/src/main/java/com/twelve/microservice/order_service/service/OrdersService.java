@@ -6,6 +6,7 @@ import com.twelve.microservice.order_service.entity.OrderItem;
 import com.twelve.microservice.order_service.entity.OrderStatus;
 import com.twelve.microservice.order_service.entity.Orders;
 import com.twelve.microservice.order_service.repository.OrdersRepository;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +57,7 @@ public class OrdersService {
     }
 
     @Retry(name = "inventoryRetry", fallbackMethod = "createOrderFallback")
+    @RateLimiter(name = "inventoryRateLimiter", fallbackMethod = "createOrderFallback")
     public OrderRequestDto createOrder(OrderRequestDto orderRequestDto) {
        // log.info("Calling the createOrder method");
         Double totalPrice = inventoryOpenFeignClient.reduceStocks(orderRequestDto);
