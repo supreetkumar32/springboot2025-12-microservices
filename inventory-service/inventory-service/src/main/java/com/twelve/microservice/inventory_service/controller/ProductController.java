@@ -1,6 +1,7 @@
 package com.twelve.microservice.inventory_service.controller;
 
 import com.twelve.microservice.inventory_service.clients.OrdersFeignClient;
+import com.twelve.microservice.inventory_service.dto.OrderRequestDto;
 import com.twelve.microservice.inventory_service.dto.ProductDto;
 import com.twelve.microservice.inventory_service.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,6 +61,12 @@ public class ProductController {
     public ResponseEntity<ProductDto> getInventoryById(@PathVariable Long id) {
         ProductDto inventory = productService.getProductById(id);
         return ResponseEntity.ok(inventory);
+    }
+
+    @PutMapping("reduce-stocks")
+    public ResponseEntity<Double> reduceStocks(@RequestBody OrderRequestDto orderRequestDto) {
+        Double totalPrice = productService.reduceStocks(orderRequestDto);
+        return ResponseEntity.ok(totalPrice);
     }
 
 }

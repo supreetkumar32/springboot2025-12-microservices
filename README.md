@@ -118,3 +118,19 @@ development of HTTP clients by allowing you to create interfaces that resemble t
 <artifactId>spring-cloud-starter-openfeign</artifactId>
 </dependency>
 
+
+Now , if we order anything from order-service, it will reduce the stock from the inventory-service.
+after teh code 
+POST http://localhost:8080/api/v1/orders/core/create-order
+{
+   "items":[
+      {
+      "productId":14,
+      "quantity":2
+      },
+      {
+      "productId":15,
+      "quantity":3
+      }
+   ]
+}

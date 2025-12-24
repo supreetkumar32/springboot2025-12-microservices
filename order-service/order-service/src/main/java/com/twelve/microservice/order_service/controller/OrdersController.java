@@ -1,5 +1,6 @@
 package com.twelve.microservice.order_service.controller;
 
+import com.twelve.microservice.order_service.clients.InventoryOpenFeignClient;
 import com.twelve.microservice.order_service.dto.OrderRequestDto;
 import com.twelve.microservice.order_service.service.OrdersService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,12 @@ public class OrdersController {
     public String helloOrders() {
         System.out.println("inside the orders controller");
         return "Hello from Orders Service";
+    }
+
+    @PostMapping("/create-order")
+    public ResponseEntity<OrderRequestDto> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
+        OrderRequestDto orderRequestDto1 = orderService.createOrder(orderRequestDto);
+        return ResponseEntity.ok(orderRequestDto1);
     }
 
     @GetMapping

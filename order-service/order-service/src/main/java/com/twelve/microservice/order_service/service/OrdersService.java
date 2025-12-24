@@ -1,6 +1,9 @@
 package com.twelve.microservice.order_service.service;
 
+import com.twelve.microservice.order_service.clients.InventoryOpenFeignClient;
 import com.twelve.microservice.order_service.dto.OrderRequestDto;
+import com.twelve.microservice.order_service.entity.OrderItem;
+import com.twelve.microservice.order_service.entity.OrderStatus;
 import com.twelve.microservice.order_service.entity.Orders;
 import com.twelve.microservice.order_service.repository.OrdersRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +20,13 @@ public class OrdersService {
 
     private final OrdersRepository orderRepository;
     private final ModelMapper modelMapper;
+    private final InventoryOpenFeignClient inventoryOpenFeignClient;
 
-    public OrdersService(OrdersRepository orderRepository, ModelMapper modelMapper) {
+    public OrdersService(OrdersRepository orderRepository, ModelMapper modelMapper,
+                         InventoryOpenFeignClient inventoryOpenFeignClient) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
+        this.inventoryOpenFeignClient=inventoryOpenFeignClient;
     }
 
     public List<OrderRequestDto> getAllOrders() {
@@ -33,5 +39,21 @@ public class OrdersService {
        // log.info("Fetching order with ID: {}", id);
         Orders order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         return modelMapper.map(order, OrderRequestDto.class);
+    }
+
+    public OrderRequestDto createOrder(OrderRequestDto orderRequestDto) {
+        log.info("Calling the createOrder method");
+        Double totalPrice = inventoryOpenFeignClient.reduceStocks(orderRequestDto);
+
+        Orders orders = modelMapper.map(orderRequestDto, Orders.class);
+        for(OrderItem orderItem: orders.getItems()) {
+            orderItem.setOrder(orders);
+        }
+        orders.setTotalPrice(totalPrice);
+        orders.setOrderStatus(OrderStatus.CONFIRMED);
+
+        Orders savedOrder = orderRepository.save(orders);
+
+        return modelMapper.map(savedOrder, OrderRequestDto.class);
     }
 }
