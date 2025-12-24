@@ -19,10 +19,14 @@ import java.util.List;
 public class OrdersController {
 
     private final OrdersService orderService;
-
     public OrdersController(OrdersService orderService) {
         this.orderService = orderService;
     }
+
+    public OrdersService getOrderService() {
+        return orderService;
+    }
+
 
     @GetMapping("/helloOrders")
     public String helloOrders() {

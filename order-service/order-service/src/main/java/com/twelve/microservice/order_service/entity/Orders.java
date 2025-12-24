@@ -6,8 +6,8 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 @Entity
 public class Orders {
     @Id
@@ -21,4 +21,39 @@ public class Orders {
 
     @OneToMany(mappedBy ="order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+
 }

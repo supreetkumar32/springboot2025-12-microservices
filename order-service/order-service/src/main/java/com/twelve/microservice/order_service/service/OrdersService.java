@@ -29,6 +29,19 @@ public class OrdersService {
         this.inventoryOpenFeignClient=inventoryOpenFeignClient;
     }
 
+    public OrdersRepository getOrderRepository() {
+        return orderRepository;
+    }
+
+    public ModelMapper getModelMapper() {
+        return modelMapper;
+    }
+
+    public InventoryOpenFeignClient getInventoryOpenFeignClient() {
+        return inventoryOpenFeignClient;
+    }
+
+
     public List<OrderRequestDto> getAllOrders() {
         //log.info("Fetching all orders");
         List<Orders> orders = orderRepository.findAll();
@@ -42,7 +55,7 @@ public class OrdersService {
     }
 
     public OrderRequestDto createOrder(OrderRequestDto orderRequestDto) {
-        log.info("Calling the createOrder method");
+       // log.info("Calling the createOrder method");
         Double totalPrice = inventoryOpenFeignClient.reduceStocks(orderRequestDto);
 
         Orders orders = modelMapper.map(orderRequestDto, Orders.class);
