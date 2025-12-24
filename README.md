@@ -109,3 +109,12 @@ some code changes in application.yml
 if we hit localhost:9010/api/v1/inventory/products/fetchOrders  ::api/v1 daalna padega as it is not there in order-service but it is there in api-gateway application.yml
 it will return Hello from Orders Service
 
+Open Feign Microservices  communication
+Spring Cloud OpenFeign integrates seamlessly with Spring Cloud and simplifies the
+development of HTTP clients by allowing you to create interfaces that resemble the  API of the target service.
+
+<dependency>
+<groupId>org.springframework.cloud</groupId>
+<artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
+

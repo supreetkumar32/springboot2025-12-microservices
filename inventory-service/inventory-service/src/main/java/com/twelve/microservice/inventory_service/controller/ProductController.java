@@ -1,5 +1,6 @@
 package com.twelve.microservice.inventory_service.controller;
 
+import com.twelve.microservice.inventory_service.clients.OrdersFeignClient;
 import com.twelve.microservice.inventory_service.dto.ProductDto;
 import com.twelve.microservice.inventory_service.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,13 +24,16 @@ public class ProductController {
     private final ProductService productService;
     private final DiscoveryClient discoveryClient;
     private final RestClient restClient;
+    private final OrdersFeignClient ordersFeignClient;
 
     public ProductController(ProductService productService,
                              DiscoveryClient discoveryClient,
-                             RestClient restClient) {
+                             RestClient restClient,
+                             OrdersFeignClient ordersFeignClient) {
         this.productService = productService;
         this.discoveryClient = discoveryClient;
         this.restClient = restClient;
+        this.ordersFeignClient=ordersFeignClient;
     }
 
     @GetMapping("/fetchOrders")
@@ -37,12 +41,13 @@ public class ProductController {
         System.out.println("inside the orderservice inventory controller");
 
        // log.info(httpServletRequest.getHeader("x-custom-header"));//it will give Supreet
-        ServiceInstance orderService= discoveryClient.getInstances("order-service").getFirst();//get order-service from the application.name from application.properties
-
-        return restClient.get()
-                .uri(orderService.getUri()+"/orders/core/helloOrders")
-                .retrieve()
-                .body(String.class);
+//        ServiceInstance orderService= discoveryClient.getInstances("order-service").getFirst();//get order-service from the application.name from application.properties
+//
+//        return restClient.get()
+//                .uri(orderService.getUri()+"/orders/core/helloOrders")
+//                .retrieve()
+//                .body(String.class);
+        return ordersFeignClient.helloOrders();
     }
 
     @GetMapping
