@@ -152,6 +152,13 @@ retries failed operations a certain number of times before giving up.
 
 RateLimiter
 Controls the rate of requests to a service by limiting the number of calls allowed during a specific time period
-
 we can check the rate limiter and retry in the post function above.
+
+Circuit Breaker
+The Circuit Breaker pattern helps stop an app from constantly trying something
+that’s likely to fail. It prevents the app from waiting around for the issue to be fixed and saves computer power.
+
+we can click on the link of circuitbreaker in 
+localhost:9020/orders/actuator or
+localhost:8080/api/v1/orders/actuator
 
