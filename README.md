@@ -68,6 +68,7 @@ SPRING CLOUD API GATEWAY
 Spring Cloud API Gateway is a powerful, flexible solution for routing and 
 proxying requests to downstream services in a microservices architecture. It
 handles several important tasks like routing, filtering, authentication, and load balancing.
+if microservice2 is called from microservice1 , microservice2 is called downstream.
 
 Spring Cloud Gateway consists of 3 main building blocks:
 1. Route
